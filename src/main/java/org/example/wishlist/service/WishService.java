@@ -27,10 +27,10 @@ public class WishService {
     }
 
     public WishItem getWish(String name){
-        return repository.getWish(name);
+        return repository.getWishByName(name);
     }
-    public List<TagEnum> getPredefinedTags(){
-        return repository.getPredefinedTags();
+    public List<TagEnum> getTags(){
+        return repository.getTags();
     }
 
     public List<WishItem> getAllWishes(){

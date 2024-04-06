@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("")
 public class WishController {
 
     private final WishService wishService;
@@ -25,11 +24,14 @@ public class WishController {
         this.userService = userService;
     }
 
+    /*
     @GetMapping("/home")
     public String home(Model model){
         model.addAttribute();
         return "";
     }
+
+     */
 
     @GetMapping("/login")
     public String login(Model model){
@@ -40,9 +42,9 @@ public class WishController {
     @PostMapping("/login")
     public String login(@ModelAttribute("user") User user) {
         for (User u : userService.getAllUsers()) {
-            if (u.getId().equals(u.getId()) && u.getPassword().equals(u.getPassword())) {
+            if (u.getId().equals(user.getId()) && u.getPassword().equals(user.getPassword())) {
                 // TODO: skal redirecte til brugers wishlist
-                return "redirect:/{username}/wishlist";
+                return "redirect:/" + u.getId() + "/wishlist";
             }
         }
         // TODO: errormessage med "forkert login"
@@ -64,17 +66,23 @@ public class WishController {
         return "register";
     }
 
-    @PostMapping("/register")
-    public String register(@ModelAttribute("user") User user){
+    @PostMapping("/register_user")
+    public String register(@ModelAttribute("user") User user, Model model){
+        User existingUser = userService.getUser(user.getId());
+        if (existingUser != null) {
+            // TODO: errormessage med "brugernavn allerede i brug"
+            return "redirect:/register";
+        }
         userService.addUser(user);
+        model.addAttribute("user", user);
         // TODO: skal redirecte til brugers wishlist
         // TODO: noget tekst med "succesfuld registrering"
-        return "redirect:/";
+        return "redirect:/ + user.getId() + /wishlist";
     }
 
     @GetMapping("/addWish")
     public String showAddWishForm(Model model){
-        List<TagEnum> tags = wishService.getPredefinedTags();
+        List<TagEnum> tags = wishService.getTags();
         model.addAttribute("tags", tags);
         model.addAttribute("wish", new WishItem("", 0, "", null));
         return "addAttraction";
