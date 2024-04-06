@@ -12,7 +12,7 @@ import java.util.List;
 public class WishRepository {
 
     private final List<WishItem> wishes;
-    public List<TagEnum> getPredefinedTags() {
+    public List<TagEnum> getTags() {
         return Arrays.asList(TagEnum.values());
     }
     

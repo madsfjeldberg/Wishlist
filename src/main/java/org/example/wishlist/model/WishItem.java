@@ -19,6 +19,12 @@ public class WishItem {
         this.tags = tags;
     }
 
+    public WishItem(String name, int price, String link){
+        this.name = name;
+        this.price = price;
+        this.link = link;
+    }
+
     public String getName(){
         return name;
     }
