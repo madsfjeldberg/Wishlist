@@ -43,7 +43,6 @@ public class WishController {
     public String login(@ModelAttribute("user") User user) {
         for (User u : userService.getAllUsers()) {
             if (u.getId().equals(user.getId()) && u.getPassword().equals(user.getPassword())) {
-                // TODO: skal redirecte til brugers wishlist
                 return "redirect:/" + u.getId() + "/wishlist";
             }
         }
@@ -53,7 +52,7 @@ public class WishController {
 
     //bliver forhåbentligt redirectet hertil fra login
     @GetMapping("/{username}/wishlist")
-    public String wishlist(@PathVariable("username") String username, Model model) {
+    public String showWishlist(@PathVariable("username") String username, Model model) {
         User user = userService.getUser(username);
         model.addAttribute("user", user);
         model.addAttribute("wishes", user.getWishes());
@@ -75,9 +74,10 @@ public class WishController {
         }
         userService.addUser(user);
         model.addAttribute("user", user);
+        System.out.println(userService.getAllUsers());
         // TODO: skal redirecte til brugers wishlist
         // TODO: noget tekst med "succesfuld registrering"
-        return "redirect:/ + user.getId() + /wishlist";
+        return "redirect:/" + user.getId() + "/wishlist";
     }
 
     @GetMapping("/addWish")
@@ -85,7 +85,7 @@ public class WishController {
         List<TagEnum> tags = wishService.getTags();
         model.addAttribute("tags", tags);
         model.addAttribute("wish", new WishItem("", 0, "", null));
-        return "addAttraction";
+        return "addWish";
     }
 
 
