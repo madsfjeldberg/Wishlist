@@ -30,8 +30,7 @@ public class WishController {
         model.addAttribute();
         return "";
     }
-
-     */
+    */
 
     @GetMapping("/login")
     public String login(Model model){
