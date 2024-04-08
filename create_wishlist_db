@@ -1,0 +1,38 @@
+DROP DATABASE IF EXISTS wishlist_db;
+
+CREATE DATABASE wishlist_db;
+
+USE wishlist_db;
+
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS wishes;
+DROP TABLE IF EXISTS wish_tags;
+DROP TABLE IF EXISTS all_tags;
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE wishes (
+    wish_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    price FLOAT NOT NULL,
+    link VARCHAR(255),
+    shop VARCHAR(255)
+);
+
+CREATE TABLE wish_tags (
+    tag_number INT AUTO_INCREMENT PRIMARY KEY,
+    wish_id INT NOT NULL,
+    tag_id INT NOT NULL
+);
+
+CREATE TABLE all_tags (
+    tag_id INT AUTO_INCREMENT PRIMARY KEY,
+    wish_id INT NOT NULL,
+    tag_value VARCHAR(255) NOT NULL
+);
+
+
