@@ -11,16 +11,20 @@
 
     <form action="/register_user" method="post" th:object="${user}">
         <label for="id">Username:</label>
-        <input type="text" id="id" name="id">
+        <input type="text" id="id" name="id" required>
         <br>
         <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
+        <label for="password" >Password:</label>
+        <input type="password" id="password" name="password" required>
         <br>
         <br>
         <button class="btn btn-primary" type="submit">Register</button>
         <button class="btn btn-secondary" type="button" onclick="history.back()">Cancel</button>
     </form>
+
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}"></p>
+    </div>
 </div>
 
 

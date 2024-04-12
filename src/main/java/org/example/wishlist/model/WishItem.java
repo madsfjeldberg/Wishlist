@@ -3,7 +3,9 @@ package org.example.wishlist.model;
 import java.util.List;
 
 public class WishItem {
-    
+
+    private String user_id;
+
     private String name;
 
     private int price;
@@ -12,11 +14,12 @@ public class WishItem {
 
     private List<String> tags;
 
-    public WishItem(String name, int price, String link, List<String> tags){
+    public WishItem(String name, int price, String link, List<String> tags, String user_id){
         this.name = name;
         this.price = price;
         this.link = link;
         this.tags = tags;
+        this.user_id = user_id;
     }
 
     public WishItem(String name, int price, String link){
@@ -25,8 +28,15 @@ public class WishItem {
         this.link = link;
     }
 
+    public WishItem() {
+    }
+
     public String getName(){
         return name;
+    }
+
+ public void setName(String name){
+        this.name = name;
     }
 
     public int getPrice(){
@@ -37,9 +47,6 @@ public class WishItem {
         return link;
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
 
     public void setPrice(int price){
         this.price = price;
@@ -49,7 +56,13 @@ public class WishItem {
         this.link = link;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
 
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 
 
 }

@@ -9,8 +9,32 @@
 
 <h1 th:text="${user.id} + '\'s Wishlist'"></h1>
 
+<a href="addWish" class="btn btn-success">Add Wish</a>
+<br>
+<br>
 <div>
     <h2>All Wishes:</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Price</th>
+            <th scope="col">Link</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${user.wishes}">
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.link}"></td>
+            <td>
+
+                <button><a th:href="@{'/' + ${user.id} + '/wishlist/deleteWish/' + ${item.name}}" class="btn btn-danger">Delete</a></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <!-- og så noget kode her der viser alle ønsker -->
 
 </div>

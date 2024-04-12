@@ -1,0 +1,47 @@
+body {
+    background: black;
+}
+
+.menu {
+    color: white; /* Hvid tekstfarve for menu */
+    display: flex;
+    justify-content: space-between; /* Placerer elementerne i hver sin ende af containeren */
+    padding: 10px 20px; /* Lidt luft omkring indholdet */
+    font-size: 30px;
+}
+
+.menu-item {
+    margin: 0 10px; /* Afstand mellem menu-elementerne */
+}
+
+.menu-item a{
+    text-decoration: none; /* Fjerner understregning fra links */
+    color: white; /* Hvid tekstfarve for links */
+    font-weight: bold; /* Gør teksten fed */
+}
+
+.menu-item a:hover {
+    text-decoration: underline; /* Understreger linket ved hover */
+}
+
+.under {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.text{
+    flex: 1;
+    padding-right: 20px;
+    color: #f1f1f1;
+    font-size: 40px;
+}
+
+.image img {
+    max-width: 100%;
+    height: auto;
+}
