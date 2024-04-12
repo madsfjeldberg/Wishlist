@@ -1,25 +1,32 @@
 package org.example.wishlist.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
 
-    private String id;
+    private String username;
 
     private String password;
 
     private List<WishItem> wishes;
 
     public User(String userName, String password, List<WishItem> wishes) {
-        this.id = userName;
+        this.username = userName;
         this.password = password;
         this.wishes = wishes;
     }
 
+    public User(String userName, String password) {
+        this.username = userName;
+        this.password = password;
+        this.wishes = new ArrayList<>();
+    }
+
     public User() {}
 
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -30,8 +37,8 @@ public class User {
         return wishes;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {
@@ -49,7 +56,7 @@ public class User {
     @Override
     public String toString() {
         return "UserModel{" +
-                "userName='" + id + '\'' +
+                "userName='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

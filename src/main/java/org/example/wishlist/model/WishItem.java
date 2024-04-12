@@ -4,6 +4,8 @@ import java.util.List;
 
 public class WishItem {
 
+    private int id;
+
     private String user_id;
 
     private String name;
@@ -20,12 +22,14 @@ public class WishItem {
         this.link = link;
         this.tags = tags;
         this.user_id = user_id;
+        this.id = getIdAndIncrement();
     }
 
     public WishItem(String name, int price, String link){
         this.name = name;
         this.price = price;
         this.link = link;
+        this.id = getIdAndIncrement();
     }
 
     public WishItem() {
@@ -33,6 +37,10 @@ public class WishItem {
 
     public String getName(){
         return name;
+    }
+
+    public int getIdAndIncrement(){
+        return id++;
     }
 
  public void setName(String name){

@@ -1,4 +1,4 @@
-body.container {
+body {
     font-family: 'Arial', sans-serif;
     background: white;
     background-size: cover;
@@ -9,7 +9,7 @@ body.container {
 
 h2 {
     text-align: center;
-    color: black; /* Change color to white */
+    color: black; /* Change color to black */
     margin-bottom: 20px; /* Add margin below the title */
 }
 

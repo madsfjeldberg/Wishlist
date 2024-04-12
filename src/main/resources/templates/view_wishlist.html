@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="'Wishlist for ' + ${user.username}"></title>
+    <title th:text="'Wishlist for ' + ${user.id}"></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body th:object="${user}">
 
-<h1 th:text="${user.username} + '\'s Wishlist'"></h1>
+<h1 th:text="${user.id} + '\'s Wishlist'"></h1>
 
-<a href="addWish" class="btn btn-success">Add Wish</a>
 <br>
 <br>
 <div>
@@ -29,24 +28,16 @@
             <td th:text="${item.price}"></td>
             <td th:text="${item.link}"></td>
             <td>
-
+                <!-- den her knap virker ikke endnu :( -->
                 <button>
-                    <a th:href="@{'/' + ${user.username} + '/wishlist/deleteWish/' + ${item.name}}" class="btn btn-danger">Delete</a>
-                </button>
-                <br>
-                <button>
-                    <a th:href="@{'/' + ${user.username} + '/wishlist/edit/' + ${item.name}}" class="btn btn-warning">Edit</a>
+                    <a th:href="@{'/' + ${user.id} + '/wishlist/reserve/' + ${item.name}}" class="btn btn-success">Reserve (DONT WORK)</a>
                 </button>
             </td>
         </tr>
         </tbody>
     </table>
     <!-- og så noget kode her der viser alle ønsker -->
-    <a href="/home" class="btn btn-primary">Home</a>
 
-    <form action="/logout" method="get">
-        <button type="submit" class="btn btn-primary">Logout</button>
-    </form>
 </div>
 
 </body>

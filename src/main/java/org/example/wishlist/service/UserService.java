@@ -42,12 +42,25 @@ public class UserService {
         return repository.getUser(username);
     }
 
+    public void editWish(String username, String originalName, WishItem wishItem) {
+        repository.editWish(username, originalName, wishItem);
+    }
+
     public List<User> getAllUsers(){
         return repository.getAllUsers();
     }
 
     public User authenticateUser(String username, String password) {
-      return repository.authenticateUser(username,password);
+        System.out.println("Input username: " + username);
+        System.out.println("Input password: " + password);
+        for (User user : repository.getAllUsers()) {
+            System.out.println("User: " + user.getUsername());
+            System.out.println("Password: " + user.getPassword());
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+      return null; //repository.authenticateUser(username,password);
     }
 
 

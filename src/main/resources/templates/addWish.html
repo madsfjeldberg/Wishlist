@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Wish</title>
-    <!--måske skal der tilføjes en css fil til styling. -->
+    <link rel="stylesheet" href="/addWish.css">
 </head>
 <body>
 
 <div class="container mt-4">
     <h2>Add New Wish</h2>
-    <form th:action="@{'/' + ${user.id} + '/save'}" th:object="${wish}" method="post">
+    <form th:action="@{'/' + ${user.username} + '/save'}" th:object="${wish}" method="post">
 
-        <div class="mb-3">
+        <div class="form-group">
             <label for="name" class="form-label">Wish Name</label>
             <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Enter wish name" required>
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="price" class="form-label">Price</label>
             <input type="number" class="form-control" id="price" name="price" th:field="*{price}" placeholder="Enter price" required>
         </div>
-        <div class="mb-3">
+        <div class="form-group">
             <label for="link" class="form-label">Link</label>
             <input type="text" class="form-control" id="link" name="link" th:field="*{link}" placeholder="Enter link to wish">
         </div>
-        <button type="submit" class="btn btn-primary">Add Wish</button>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Wish</button>
+            <button class="btn btn-primary" type="button" onclick="history.back()">Cancel</button>
+        </div>
     </form>
 </div>
+
+</body>
+</html>

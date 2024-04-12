@@ -35,15 +35,37 @@ public class UserRepository {
     }
 
     public void deleteUser(String username){
-        users.removeIf(user -> user.getId().equals(username));
+        users.removeIf(user -> user.getUsername().equals(username));
     }
 
-    public User getUser(String username){
+    public void editWish(String username, String originalName, WishItem wishItem) {
+        User user = getUser(username);
+        if (user != null) {
+            for (WishItem wish : user.getWishes()) {
+                if (wish.getName().equals(originalName)) {
+                    wish.setName(wishItem.getName());
+                    wish.setPrice(wishItem.getPrice());
+                    wish.setLink(wishItem.getLink());
+                }
+            }
+        }
+    }
+
+    public User getUser(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+    public User getUser2(String username){
         return users.stream()
-                .filter(user -> user.getId().equals(username))
+                .filter(user -> user.getUsername().equals(username))
                 .findFirst()
                 .orElse(null);
     }
+
 
     public WishItem getWish(String username, String wishName) {
         User user = getUser(username);
@@ -84,12 +106,10 @@ public class UserRepository {
 
     public User authenticateUser(String username, String password) {
         for (User user : users) {
-            if (user.getId().equals(username) && user.getPassword().equals(password)) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;
             }
         }
         return null;
     }
 }
-
-

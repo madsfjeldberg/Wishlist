@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/home.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn.icon-icons.com/icons2/3560/PNG/512/wishlist_product_list_order_cart_icon_225175.png">
     <title>Home</title>
 </head>
 <body>
@@ -12,8 +13,11 @@
     <div class="menu-item">
         Wishlist
     </div>
-    <div class="menu-item">
-        <a href="http://localhost:8080/login">Login</a>
+    <div class="menu-item" th:if="${isLoggedIn}">
+        <a th:href="@{'/' + ${user.username} + '/wishlist'}">My Wishlist</a>
+    </div>
+    <div class="menu-item" th:unless="${isLoggedIn}">
+        <a href="/login">Login</a>
     </div>
 </div>
 
