@@ -180,6 +180,8 @@ public class WishController {
         }
         return "redirect:/home";
     }
+
+    // en sjov kommentar :)
 }
 
 
