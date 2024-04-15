@@ -36,20 +36,19 @@ CREATE TABLE all_tags (
     tag_value VARCHAR(255) NOT NULL
 );
 
-INSERT INTO users (username, password, email) VALUES
-    ('admin', 'admin', 'admin@mail.com'),
-    ('user1', 'password1', 'user1@mail.dk'),
-    ('user2', 'password2', 'user2@mail.dk'),
-    ('user3', 'password3', 'user3@mail.dk');
+INSERT INTO users (username, password) VALUES
+    ('admin', 'admin'),
+    ('user1', 'password1'),
+    ('user2', 'password2'),
+    ('user3', 'password3');
 
 INSERT INTO wishes (user_id, name, price, link, shop) VALUES
-    1, 'Macbook Pro', 2000, 'https://www.apple.com/dk/', 'Apple'),
+    (1, 'Macbook Pro', 2000, 'https://www.apple.com/dk/', 'Apple'),
     (1, 'iPhone 12', 800, 'https://www.apple.com/dk/', 'Apple'),
     (2, 'Airpods Pro', 200, 'https://www.apple.com/dk/', 'Apple'),
     (2, 'Apple Watch', 400, 'https://www.apple.com/dk/', 'Apple'),
     (3, 'Macbook Air', 1200, 'https://www.apple.com/dk/', 'Apple'),
-    (3, 'iPad Pro', 1000, 'https://www.apple.com/dk/', 'Apple')
-);
+    (3, 'iPad Pro', 1000, 'https://www.apple.com/dk/', 'Apple');
 
 
 
