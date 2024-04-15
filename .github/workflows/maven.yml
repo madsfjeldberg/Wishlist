@@ -16,9 +16,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    permissions: # This is required to allow the action to write check annotations to the repository
+      checks: write
+      contents: read
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
