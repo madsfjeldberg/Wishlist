@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("")
 public class WishController {
 
     private final WishService wishService;
@@ -35,6 +36,12 @@ public class WishController {
     }
 
     */
+
+    @GetMapping
+    public String redirHome() {
+        return "redirect:/home";
+    }
+
 
     @GetMapping("/home")
     public String home(Model model, HttpSession session) {
@@ -181,11 +188,3 @@ public class WishController {
         return "redirect:/home";
     }
 }
-
-
-
-
-
-
-
-
