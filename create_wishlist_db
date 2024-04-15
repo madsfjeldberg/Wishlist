@@ -12,13 +12,13 @@ DROP TABLE IF EXISTS all_tags;
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE wishes (
     wish_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
     price FLOAT NOT NULL,
     link VARCHAR(255),
     shop VARCHAR(255)
@@ -42,7 +42,14 @@ INSERT INTO users (username, password, email) VALUES
     ('user2', 'password2', 'user2@mail.dk'),
     ('user3', 'password3', 'user3@mail.dk');
 
-INSERT INTO wishes (user_id, price, link, shop) VALUES
+INSERT INTO wishes (user_id, name, price, link, shop) VALUES
+    1, 'Macbook Pro', 2000, 'https://www.apple.com/dk/', 'Apple'),
+    (1, 'iPhone 12', 800, 'https://www.apple.com/dk/', 'Apple'),
+    (2, 'Airpods Pro', 200, 'https://www.apple.com/dk/', 'Apple'),
+    (2, 'Apple Watch', 400, 'https://www.apple.com/dk/', 'Apple'),
+    (3, 'Macbook Air', 1200, 'https://www.apple.com/dk/', 'Apple'),
+    (3, 'iPad Pro', 1000, 'https://www.apple.com/dk/', 'Apple')
+);
 
 
 

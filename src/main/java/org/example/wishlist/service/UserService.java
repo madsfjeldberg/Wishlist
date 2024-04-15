@@ -6,10 +6,11 @@ import org.example.wishlist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService{
 
     private final UserRepository repository;
 
@@ -18,11 +19,15 @@ public class UserService {
         this.repository = repository;
     }
 
-    public void addUser(User user){
+    public void addUser(User user)  {
         repository.addUser(user);
     }
 
-    public WishItem getWish(String username, String name) {
+    public List<WishItem> getWishesForUser(String username) {
+        return repository.getWishesForUser(username);
+    }
+
+    public WishItem getWish(String username, String name)  {
         return repository.getWish(username, name);
     }
 
@@ -30,15 +35,15 @@ public class UserService {
         repository.deleteWish(username, name);
     }
 
-    public void deleteUser(String username){
+    public void deleteUser(String username) {
         repository.deleteUser(username);
     }
 
-    public void addWish(String username, WishItem wish){
+    public void addWish(String username, WishItem wish) {
         repository.addWish(username, wish);
     }
 
-    public User getUser(String username){
+    public User getUser(String username) {
         return repository.getUser(username);
     }
 
@@ -51,11 +56,7 @@ public class UserService {
     }
 
     public User authenticateUser(String username, String password) {
-        System.out.println("Input username: " + username);
-        System.out.println("Input password: " + password);
         for (User user : repository.getAllUsers()) {
-            System.out.println("User: " + user.getUsername());
-            System.out.println("Password: " + user.getPassword());
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;
             }

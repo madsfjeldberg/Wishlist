@@ -2,43 +2,30 @@ package org.example.wishlist.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.example.wishlist.model.TagEnum;
 import org.example.wishlist.model.User;
 import org.example.wishlist.model.WishItem;
 import org.example.wishlist.service.UserService;
-import org.example.wishlist.service.WishService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("")
 public class WishController {
 
-    private final WishService wishService;
     private final UserService userService;
 
-    public WishController(WishService wishService, UserService userService) {
-        this.wishService = wishService;
+    public WishController(UserService userService) {
         this.userService = userService;
     }
 
-
-   /* @GetMapping("/home")
-    public String home(Model model){
-        model.addAttribute("user", new User());
-        return "home";
-    }
-
-    */
-
     @GetMapping
-    public String redirHome() {
+    public String redirectHome() {
         return "redirect:/home";
     }
 
@@ -60,7 +47,7 @@ public class WishController {
         return "login";
     }
     @PostMapping("/login")
-    public String login(@ModelAttribute("user") User user, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String login(@ModelAttribute("user") User user, HttpSession session, RedirectAttributes redirectAttributes) throws SQLException {
         User authenticatedUser = userService.authenticateUser(user.getUsername(), user.getPassword());
         if (authenticatedUser != null) {
             session.setAttribute("user", authenticatedUser);
@@ -71,11 +58,12 @@ public class WishController {
         }
     }
     @GetMapping("/{username}/wishlist")
-    public String showWishlist(@PathVariable("username") String username, HttpSession session, Model model) {
+    public String showWishlist(@PathVariable("username") String username, HttpSession session, Model model) throws SQLException {
         User authenticatedUser = (User) session.getAttribute("user");
         if (authenticatedUser != null && authenticatedUser.getUsername().equals(username)) {
             model.addAttribute("user", authenticatedUser);
-            model.addAttribute("wishes", authenticatedUser.getWishes());
+            model.addAttribute("wishes", userService.getWishesForUser(username));
+            // model.addAttribute("wishes", authenticatedUser.getWishes());
             return "wishlist";
         } else {
             return "redirect:/login";
@@ -83,7 +71,7 @@ public class WishController {
     }
 
     @GetMapping("/{username}/view_wishlist")
-    public String viewWishlist(@PathVariable("username") String username, Model model) {
+    public String viewWishlist(@PathVariable("username") String username, Model model) throws SQLException {
         User user = userService.getUser(username);
         model.addAttribute("user", user);
         model.addAttribute("wishes", user.getWishes());
@@ -97,7 +85,7 @@ public class WishController {
     }
 
     @PostMapping("/register_user")
-    public String register(@ModelAttribute("user") User user, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String register(@ModelAttribute("user") User user, HttpSession session, RedirectAttributes redirectAttributes) throws SQLException {
         User existingUser = userService.getUser(user.getUsername());
         if (existingUser != null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Username already in use");
@@ -112,7 +100,7 @@ public class WishController {
     }
 
     @GetMapping("/{username}/wishlist/edit/{wishName}")
-    public String edit(@PathVariable String username, @PathVariable String wishName, Model model) {
+    public String edit(@PathVariable String username, @PathVariable String wishName, Model model) throws SQLException{
         User user = userService.getUser(username);
         WishItem wish = userService.getWish(username, wishName);
         // List<TagEnum> tags = wishService.getTags();
@@ -124,7 +112,8 @@ public class WishController {
     }
 
     @PostMapping("/{username}/wishlist/update")
-    public String update(@PathVariable String username, @RequestParam("originalName") String originalName, @ModelAttribute("wish") WishItem wish, HttpSession session) {
+    public String update(@PathVariable String username, @RequestParam("originalName") String originalName,
+                         @ModelAttribute("wish") WishItem wish, HttpSession session) throws SQLException {
         User authenticatedUser = (User) session.getAttribute("user");
         if (authenticatedUser == null || !authenticatedUser.getUsername().equals(username)) {
             return "redirect:/login";
@@ -135,36 +124,34 @@ public class WishController {
 
 
     @GetMapping("/{username}/addWish")
-    public String showAddWishForm(@PathVariable String username, HttpSession session, Model model) {
+    public String showAddWishForm(@PathVariable String username, HttpSession session, Model model) throws SQLException {
         User authenticatedUser = (User) session.getAttribute("user");
         if (authenticatedUser == null || !authenticatedUser.getUsername().equals(username)) {
             return "redirect:/login";
         }
         User user = userService.getUser(username);
-        List<TagEnum> tags = wishService.getTags();
         model.addAttribute("user", user);
-        model.addAttribute("tags", tags);
         model.addAttribute("wish", new WishItem());
         return "addWish";
     }
 
     @PostMapping("/{username}/save")
-    public ModelAndView addWish(@PathVariable String username,
+    public String addWish(@PathVariable String username,
                                 @ModelAttribute("wish") WishItem wish,
-                                HttpSession session) {
+                                HttpSession session) throws SQLException {
         User authenticatedUser = (User) session.getAttribute("user");
         if (authenticatedUser == null || !authenticatedUser.getUsername().equals(username)) {
-            return new ModelAndView("redirect:/login");
+            return "redirect:/login";
         }
         userService.addWish(username, wish);
         System.out.println("Wish added for user: " + username);
-        return new ModelAndView("redirect:/" + username + "/wishlist");
+        return "redirect:/" + username + "/wishlist";
     }
 
 
 
     @GetMapping("{username}/wishlist/deleteWish/{name}")
-    public String deleteWish(@PathVariable String username, @PathVariable String name, HttpSession session) {
+    public String deleteWish(@PathVariable String username, @PathVariable String name, HttpSession session) throws SQLException {
         User authenticatedUser = (User) session.getAttribute("user");
 
         if (authenticatedUser == null || !authenticatedUser.getUsername().equals(username)) {
