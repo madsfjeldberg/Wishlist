@@ -2,6 +2,7 @@ package org.example.wishlist.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class User {
 
@@ -51,6 +52,16 @@ public class User {
 
     public void addWish(WishItem wish) {
         wishes.add(wish);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password);
     }
 
     @Override
