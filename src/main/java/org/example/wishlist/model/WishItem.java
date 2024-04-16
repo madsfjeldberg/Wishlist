@@ -14,14 +14,28 @@ public class WishItem {
 
     private String link;
 
-    private List<String> tags;
 
-    public WishItem(String name, int price, String link, List<String> tags, String user_id){
+    private boolean isReserved;
+
+    private String reservedUserName;
+
+    public WishItem(String name, int price, String link, String user_id,
+                    boolean isReserved, String reservedUserName) {
         this.name = name;
         this.price = price;
         this.link = link;
-        this.tags = tags;
         this.user_id = user_id;
+        this.isReserved = isReserved;
+        this.reservedUserName = reservedUserName;
+        this.id = getIdAndIncrement();
+    }
+
+    public WishItem(String name, int price, String link, boolean isReserved, String reservedUserName) {
+        this.name = name;
+        this.price = price;
+        this.link = link;
+        this.isReserved = isReserved;
+        this.reservedUserName = reservedUserName;
         this.id = getIdAndIncrement();
     }
 
@@ -64,13 +78,23 @@ public class WishItem {
         this.link = link;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public boolean isReserved() {
+        return isReserved;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public void setReserved(boolean reserved) {
+        isReserved = reserved;
     }
+
+    public String getReservedUserName() {
+        return reservedUserName;
+    }
+
+    public void setReservedUserName(String reservedUserName) {
+        this.reservedUserName = reservedUserName;
+    }
+
+
 
 
 }

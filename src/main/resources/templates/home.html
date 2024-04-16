@@ -12,14 +12,19 @@
 <div class="menu">
     <div class="menu-item">
         Wishlist
+        <a href="/about">About Us</a>
     </div>
     <div class="menu-item" th:if="${isLoggedIn}">
         <a th:href="@{'/' + ${user.username} + '/wishlist'}">My Wishlist</a>
     </div>
     <div class="menu-item" th:unless="${isLoggedIn}">
         <a href="/login">Login</a>
+        <a class="btn btn-secondary" type="a" onclick="window.location.href='/register'">Register</a>
     </div>
 </div>
+
+
+
 
 <div class="under">
     <div class="container">

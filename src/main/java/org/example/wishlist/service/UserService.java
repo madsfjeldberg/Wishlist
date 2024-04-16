@@ -64,6 +64,14 @@ public class UserService{
       return null; //repository.authenticateUser(username,password);
     }
 
+    public void reserveWish(String username, String name, String userToUpdate) {
+        repository.reserveWish(username, name, userToUpdate);
+    }
+
+    public void unreserveWish(String username, String name) {
+        repository.unreserveWish(username, name);
+    }
+
 
 
 }

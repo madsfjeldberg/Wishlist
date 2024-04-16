@@ -9,6 +9,7 @@
 <body th:object="${user}">
 
 <h1 th:text="${user.username} + '\'s Wishlist'"></h1>
+<h2 th:text="'Logged in as: ' + ${authenticatedUser.username}"></h2>
 
 <br>
 <br>
@@ -20,6 +21,7 @@
             <th scope="col">Item</th>
             <th scope="col">Price</th>
             <th scope="col">Link</th>
+            <th scope="col">Reserved</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -27,18 +29,26 @@
         <tr th:each="item : ${user.wishes}">
             <td th:text="${item.name}"></td>
             <td th:text="${item.price}"></td>
-            <td th:text="${item.link}"></td>
+            <td><a th:href="${item.link}" target="_blank">Link</a></td>
+            <td th:text="${item.isReserved ? 'Yes' : 'No'}"></td>
             <td>
-                <!-- den her knap virker ikke endnu :( -->
-                <button>
-                    <a th:href="@{'/' + ${user.username} + '/wishlist/reserve/' + ${item.name}}" class="btn btn-success">Reserve (DONT WORK)</a>
-                </button>
+                <form th:if="${item.isReserved && item.reservedUserName == authenticatedUser.username}" th:action="@{'/' + ${user.username} + '/view_wishlist/unreserve/' + ${item.name}}" method="post">
+                    <input type="hidden" name="itemName" th:value="${item.name}">
+                    <button type="submit" class="btn btn-warning">Unreserve</button>
+                </form>
+                <div th:if="${item.isReserved && item.reservedUserName != authenticatedUser.username}">
+                    <button type="button" class="btn btn-secondary" disabled>Reserved</button>
+                </div>
+
+
+                <form th:if="${!item.isReserved}" th:action="@{'/' + ${user.username} + '/view_wishlist/reserve/' + ${item.name}}" method="post">
+                    <input type="hidden" name="itemName" th:value="${item.name}">
+                    <button type="submit" class="btn btn-success">Reserve</button>
+                </form>
             </td>
         </tr>
         </tbody>
     </table>
-    <!-- og så noget kode her der viser alle ønsker -->
-
 </div>
 
 </body>

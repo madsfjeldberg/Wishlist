@@ -23,7 +23,6 @@ public class UserRepository {
     private String dbPassword;
 
     public UserRepository() {
-
     }
 
     public void addUser(User user)  {
@@ -88,8 +87,7 @@ public class UserRepository {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                User user = new User(username, rs.getString("password"), getWishesForUser(username));
-                return user;
+                return new User(username, rs.getString("password"), getWishesForUser(username));
             }
         }
         catch (SQLException sqle) {
@@ -155,7 +153,7 @@ public class UserRepository {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                wishes.add(new WishItem(rs.getString("name"), rs.getInt("price"), rs.getString("link")));
+                wishes.add(new WishItem(rs.getString("name"), rs.getInt("price"), rs.getString("link"), rs.getBoolean("is_reserved"), rs.getString("reserved_username")));
             }
         }
         catch (SQLException sqle) {
@@ -180,4 +178,37 @@ public class UserRepository {
         }
         return users;
     }
+
+    public void unreserveWish() {
+        // TODO
+    }
+
+    public void reserveWish(String username, String name, String userToUpdate) {
+        Connection connection = ConnectionManager.getConnection(dbUrl, dbUsername, dbPassword);
+        String sql = "UPDATE WISHES SET is_reserved = true, reserved_username = ? WHERE user_id = (SELECT user_id FROM USERS WHERE username = ?) AND name = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, userToUpdate);
+            ps.setString(3, name);
+            System.out.println(ps.executeUpdate());
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+
+    }
+
+    public void unreserveWish(String username, String name) {
+        Connection connection = ConnectionManager.getConnection(dbUrl, dbUsername, dbPassword);
+        String sql = "UPDATE WISHES SET is_reserved = false, reserved_username = null WHERE user_id = (SELECT user_id FROM USERS WHERE username = ?) AND name = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, name);
+            System.out.println(ps.executeUpdate());
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+    }
+
 }
