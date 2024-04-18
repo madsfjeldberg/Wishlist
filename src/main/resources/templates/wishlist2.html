@@ -16,8 +16,7 @@
         }
         .card {
             margin: 20px;
-            width: 200px;
-            height: 150px;
+            flex: 1 0 21%;
         }
         .card-link {
             color: white;
@@ -45,19 +44,16 @@
             <div class="card-body">
                 <h5 class="card-title>" th:text="${item.name}"></h5>
                 <h6 class="card-subtitle mb-2 text-muted" th:text="${item.price} + ' kr.'"></h6>
-                <div class="d-flex">
-                    <a th:href="${item.link}" class="btn btn-primary card-link me-2">Link</a>
-                    <form th:if="${item.isReserved && item.reservedUserName == authenticatedUser.username}" th:action="@{'/' + ${user.username} + '/view_wishlist/unreserve/' + ${item.name}}" method="post">
-                        <input type="hidden" name="itemName" th:value="${item.name}">
-                        <button type="submit" class="btn btn-warning">Unreserve</button>
-                    </form>
-                    <div th:if="${item.isReserved && item.reservedUserName != authenticatedUser.username}">
-                        <button type="button" class="btn btn-secondary" disabled>Reserved</button>
-                    </div>
-                    <form th:if="${!item.isReserved}" th:action="@{'/' + ${user.username} + '/view_wishlist/reserve/' + ${item.name}}" method="post">
-                        <input type="hidden" name="itemName" th:value="${item.name}">
-                        <button type="submit" class="btn btn-success">Reserve</button>
-                    </form>
+                <div class="btn-group" role="group" aria-label="Wish Actions">
+                    <button type="button" class="btn btn-primary">
+                        <a th:href="${item.link}" class="card-link">Link</a>
+                    </button>
+                    <button type="button" class="btn btn-warning">
+                        <a th:href="@{'/' + ${user.username} + '/wishlist/edit/' + ${item.name}}" class="text-white text-decoration-none">Edit</a>
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        <a th:href="@{'/' + ${user.username} + '/wishlist/deleteWish/' + ${item.name}}" class="text-white text-decoration-none">Delete</a>
+                    </button>
                 </div>
             </div>
         </div>

@@ -66,7 +66,6 @@ public class WishController {
         if (authenticatedUser != null && authenticatedUser.getUsername().equals(username)) {
             model.addAttribute("user", authenticatedUser);
             model.addAttribute("wishes", userService.getWishesForUser(username));
-            // model.addAttribute("wishes", authenticatedUser.getWishes());
             return "wishlist";
         } else {
             return "redirect:/login";
