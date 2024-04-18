@@ -9,6 +9,20 @@
         #username_copy {
             display: none;
         }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .card {
+            margin: 20px;
+            height: 150px;
+            width: 200px;
+        }
+        .card-link {
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body th:object="${user}" class="container">
@@ -26,34 +40,24 @@
     <a href="addWish" class="btn btn-success mb-3">Add Wish</a>
     <input type="text" th:value="'https://wishlist-app.azurewebsites.net/' + ${user.username} + '/view_wishlist'" id="username_copy">
     <button onclick="copyToClipboard()" class="btn btn-primary mb-3">Copy Link</button>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Price</th>
-                <th scope="col">Link</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item : ${wishes}">
-                <td th:text="${item.name}"></td>
-                <td th:text="${item.price}"></td>
-                <td th:text="${item.link}"></td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Wish Actions">
-                        <button type="button" class="btn btn-danger">
-                            <a th:href="@{'/' + ${user.username} + '/wishlist/deleteWish/' + ${item.name}}" class="text-white text-decoration-none">Delete</a>
-                        </button>
-                        <button type="button" class="btn btn-warning">
-                            <a th:href="@{'/' + ${user.username} + '/wishlist/edit/' + ${item.name}}" class="text-white text-decoration-none">Edit</a>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="card-container">
+        <div class="card" th:each="item : ${wishes}" style="width: 14rem;">
+            <div class="card-body">
+                <h5 class="card-title>" th:text="${item.name}"></h5>
+                <h6 class="card-subtitle mb-2 text-muted" th:text="${item.price} + ' kr.'"></h6>
+                <div class="btn-group" role="group" aria-label="Wish Actions">
+                    <button type="button" class="btn btn-primary">
+                        <a th:href="${item.link}" class="card-link">Link</a>
+                    </button>
+                    <button type="button" class="btn btn-warning">
+                        <a th:href="@{'/' + ${user.username} + '/wishlist/edit/' + ${item.name}}" class="text-white text-decoration-none">Edit</a>
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        <a th:href="@{'/' + ${user.username} + '/wishlist/deleteWish/' + ${item.name}}" class="text-white text-decoration-none">Delete</a>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
